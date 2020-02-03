@@ -35,7 +35,7 @@ node {
 	//docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             //image = docker.image('saud12345/pipeline:latest')
             //image.pull()
-	    app.pull("saud12345/pipeline:latest")
+	    //app.pull("saud12345/pipeline:latest")
             //app.pull("latest")	
            // }
 	    steps {
