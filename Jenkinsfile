@@ -33,8 +33,10 @@ node {
 	
     stage('pull image'){
 	docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            image = docker.image('saud12345/pipeline:latest')
-            image.pull()
+            //image = docker.image('saud12345/pipeline:latest')
+            //image.pull()
+	    app.pull("${env.BUILD_NUMBER}")
+            app.pull("latest")	
             }
 	    steps {
                 echo "Hello World!"
