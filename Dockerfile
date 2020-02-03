@@ -13,7 +13,7 @@ HEALTHCHECK --interval=5s \
             --timeout=5s \
             CMD curl -f http://127.0.0.1:8000 || exit 1
  
-CMD [“node”, “main.js”]
+
 
 # tell docker what port to expose basicall this is a simple web app 
 EXPOSE 8000
