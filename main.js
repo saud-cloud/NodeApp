@@ -8,5 +8,5 @@ var server = http.createServer(function (request, response) {
 });
 
 // listen on localhost:8000
-server.listen(8000);
+server.listen(8000, 0.0.0.0);
 console.log("Server listening on port 8000 :  http://35.177.175.56/");
