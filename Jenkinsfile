@@ -41,8 +41,8 @@ node {
 	    steps {
                 echo "Hello World!"
                 sh "echo Hello from the shell"
-                sh "docker run -it -p 8000:8000 saud12345/pipeline:latest"
-                sh "uptime"
+               // sh "docker run -it -p 8000:8000 saud12345/pipeline:latest"
+               // sh "uptime"
             }
 	    
     }
