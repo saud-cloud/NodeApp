@@ -33,13 +33,17 @@ node {
     stage('Deploy to EC2'){
 	
        
-        sshagent(credentials : ['server-id']) {
+      /*  sshagent(credentials : ['server-id']) {
 	    sh 'ssh -o  StrictHostKeyChecking=no ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com uptime'
             sh 'ssh -v ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com'
             sh 'docker pull saud12345/pipeline:latest'
             sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
             
-        }
+        } */
+	sshagent(credentials : ['server-id']) {
+        sh "echo pwd"
+        sh 'ssh -t -t ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
+    }
        
 
 	    echo "Trying to Pull Docker Build to DockerHub"
