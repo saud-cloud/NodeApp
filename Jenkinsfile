@@ -35,7 +35,7 @@ node {
        
         sshagent(credentials : ['server-id']) {
             sh 'docker pull saud12345/pipeline:latest'
-            sh 'docker run -d --name App -p 8000:8000 saud12345/pipeline'
+            sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
             
         }
        
