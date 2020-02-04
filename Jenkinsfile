@@ -24,6 +24,8 @@ node {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
+      mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_URL} to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'gkhan@enquizit.com,saudjunaid96@gmail.com'
+	    def userInput = input(id: 'userInput', message: 'type anything if you want to start the job', ok: 'Yes')
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
@@ -38,8 +40,8 @@ node {
 
 
 	    echo "Trying to Pull Docker Build to DockerHub"
-       mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_URL} to approve or Reject. http://35.177.175.56:8080/', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'gkhan@enquizit.com'
-	    def userInput = input(id: 'userInput', message: 'type anything if you want to start the job', ok: 'Yes')
+     //  mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_URL} to approve or Reject. http://35.177.175.56:8080/', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'gkhan@enquizit.com'
+	//    def userInput = input(id: 'userInput', message: 'type anything if you want to start the job', ok: 'Yes')
     }
  
 }
