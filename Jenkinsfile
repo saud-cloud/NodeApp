@@ -34,7 +34,8 @@ node {
 	
        
         sshagent(credentials : ['server-id']) {
-	    sh 'ssh -o ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com uptime'
+	    sh 'ssh -o  StrictHostKeyChecking=no ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com uptime'
+            sh 'ssh -v ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com'
             sh 'docker pull saud12345/pipeline:latest'
             sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
             
