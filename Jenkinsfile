@@ -30,10 +30,11 @@ node {
                 echo "Trying to Push Docker Build to DockerHub"
     }
 	
-    stage('Deploy to S3'){
+    stage('Deploy to EC2'){
 	
-       //sh "echo Hello from SHELL"
-       //sh " docker run -d  -p 80:8000 saud12345/pipeline "
+       sh "sudo ssh -i /home/ec2-user/jenkins_key.pem ec2-user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com"
+       sh "docker pull saud12345/pipeline:latest"	    
+       sh " docker run -d  -p 80:8000 saud12345/pipeline "
 
 
 	    echo "Trying to Pull Docker Build to DockerHub"
