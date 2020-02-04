@@ -32,9 +32,9 @@ node {
 	
     stage('Deploy to EC2'){
 	
-       sh "sudo ssh -i /home/ec2-user/jenkins_key.pem ec2-user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com"
-       sh "sudo docker pull saud12345/pipeline:latest"	    
-       sh "sudo docker run -d  -p 80:8000 saud12345/pipeline "
+       sh "ssh -i /home/ec2-user/jenkins_key.pem ec2-user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com"
+       sh "docker pull saud12345/pipeline:latest"	    
+       sh "docker run -d  -p 80:8000 saud12345/pipeline "
 
 
 	    echo "Trying to Pull Docker Build to DockerHub"
