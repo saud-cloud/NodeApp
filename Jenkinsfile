@@ -32,18 +32,12 @@ node {
     }
 	
     stage('pull image'){
-	/*//docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            //image = docker.image('saud12345/pipeline:latest')
-            //image.pull()
-	    //app.pull("saud12345/pipeline:latest")
-            //app.pull("latest")	
-           // }
-	    steps {
+	steps {
                 echo "Hello World!"
                 sh "echo Hello from the shell"
-               // sh "docker run -it -p 8000:8000 saud12345/pipeline:latest"
-               // sh "uptime"
-            }*/
-	    echo "Trying to Push Docker Build to DockerHub"
+                sh "hostname"
+                sh "uptime"
+            }
+	    echo "Trying to Pull Docker Build to DockerHub"
     }
 }
