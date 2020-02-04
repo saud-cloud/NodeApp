@@ -32,12 +32,9 @@ node {
     }
 	
     stage('pull image'){
-	steps {
-                echo "Hello World!"
-                sh "echo Hello from the shell"
-                sh "hostname"
-                sh "uptime"
-            }
+	
+       sh "#!/bin/ksh \n" + "echo \"Hello from \$SHELL\""
+
 	    echo "Trying to Pull Docker Build to DockerHub"
     }
 }
