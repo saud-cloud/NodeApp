@@ -33,7 +33,7 @@ node {
 	
     stage('pull image'){
 	
-       sh "#!/bin/ksh \n" + "echo \"Hello from \$SHELL\""
+       sh "echo Hello from SHELL"
 
 	    echo "Trying to Pull Docker Build to DockerHub"
     }
