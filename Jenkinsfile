@@ -34,9 +34,11 @@ node {
     stage('pull image'){
 	
        sh "echo Hello from SHELL"
-       sh " docker run -d  -p 8000:8000 saud12345/pipeline "
+       sh " docker run -d  -p 80:8000 saud12345/pipeline "
 
 
 	    echo "Trying to Pull Docker Build to DockerHub"
+       mail bcc: '', body: 'hi this is jenkins build email', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'saudjunaid96@gmail.com'
     }
+ 
 }
