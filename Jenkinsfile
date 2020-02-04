@@ -34,6 +34,8 @@ node {
     stage('pull image'){
 	
        sh "echo Hello from SHELL"
+       sh " docker run -d  -p 8000:8000 saud12345/pipeline "
+
 
 	    echo "Trying to Pull Docker Build to DockerHub"
     }
