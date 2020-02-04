@@ -1,14 +1,9 @@
 node {
     def app
-
-    stage('Clone repository') {
-        /* Cloning the Repository to our Workspace */
-
-        checkout scm
-    }
-
-    stage('Build image') {
+	
+    stage('clone repository & Build image ') {
         /* This builds the actual image */
+	checkout scm
 
         app = docker.build("saud12345/pipeline")
     }
@@ -20,7 +15,7 @@ node {
         }
     }
 
-    stage('Push image') {
+    stage('Deploy to Dev') {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
@@ -29,14 +24,16 @@ node {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
-            } 
+	    sh "echo Hello from SHELL"
+            sh " docker run -d  -p 80:8000 saud12345/pipeline "
+        } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
 	
-    stage('pull image'){
+    stage('Deploy to S3'){
 	
-       sh "echo Hello from SHELL"
-       sh " docker run -d  -p 80:8000 saud12345/pipeline "
+       //sh "echo Hello from SHELL"
+       //sh " docker run -d  -p 80:8000 saud12345/pipeline "
 
 
 	    echo "Trying to Pull Docker Build to DockerHub"
