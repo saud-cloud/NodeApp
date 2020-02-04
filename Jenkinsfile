@@ -40,13 +40,11 @@ node {
             sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
             
         } */
-	sshagent(credentials : ['server-id']) {
+	sshagent(['server-id']) {
        // sh "echo pwd"
         //sh 'ssh -t -t ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
-                       sh """ssh -i /home/ec2-user/jenkins_key.pem ec2-user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com << EOF 
-                             docker pull saud12345/pipeline
-                              exit
-                              EOF"""
+                       sh 'docker pull saud12345/pipeline'
+                       sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
 	}
 	    
        
