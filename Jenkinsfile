@@ -31,6 +31,8 @@ node {
     }
 	
     stage('Deploy to EC2'){
+	    
+	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker run -d -p 80:8000 saud12345/pipeline', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	
        
       /*  sshagent(credentials : ['server-id']) {
@@ -39,14 +41,14 @@ node {
             sh 'docker pull saud12345/pipeline:latest'
             sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
             
-        } */
+        } 
 	sshagent(['server-id']) {
        // sh "echo pwd"
         //sh 'ssh -t -t ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
                        sh 'docker pull saud12345/pipeline'
                        sh 'docker run -d  -p 8000:8000 saud12345/pipeline'
 	}
-	    
+	    */
        
 
 	    echo "Trying to Pull Docker Build to DockerHub"
