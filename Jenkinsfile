@@ -9,6 +9,7 @@ node {
     }
 
     stage('Test image') {
+	sh "npm install -g open"
         sh "npm test"
         app.inside {
             echo "Tests passed"
