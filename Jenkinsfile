@@ -25,7 +25,7 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
 	    sh "echo Hello from SHELL"
-	    sh "docker stop mycontainer"
+	    //sh "docker stop mycontainer"
             sh " docker run --name mycontainer -d  -p 80:8000 saud12345/pipeline "
         } 
                 echo "Trying to Push Docker Build to DockerHub"
@@ -34,7 +34,7 @@ node {
     stage('Production'){
 	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline  ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker stop mycontainer ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	   // sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker stop mycontainer ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker run --name mycontainer -d -p 80:8000 saud12345/pipeline ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	
        
