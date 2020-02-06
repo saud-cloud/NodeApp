@@ -32,7 +32,8 @@ node {
 	
     stage('Deploy to EC2'){
 	    
-	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline , docker run -d -p 80:8000 saud12345/pipeline ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline  ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker run -d -p 80:8000 saud12345/pipeline ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	
        
       /*  sshagent(credentials : ['server-id']) {
