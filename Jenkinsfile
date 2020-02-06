@@ -19,13 +19,14 @@ node {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
-      mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_URL} to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'saudjunaid96@gmail.com'
+      mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_NUMBER} to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'saudjunaid96@gmail.com'
 	    def userInput = input(id: 'userInput', message: 'type anything if you want to start the job', ok: 'Yes')
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
 	    sh "echo Hello from SHELL"
 	    sh "docker stop mycontainer"
+            sh "docker rm mycontainer"
             sh " docker run --name mycontainer -d  -p 80:8000 saud12345/pipeline "
         } 
                 echo "Trying to Push Docker Build to DockerHub"
@@ -35,6 +36,7 @@ node {
 	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline  ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker stop mycontainer ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker rm mycontainer ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker run --name mycontainer -d -p 80:8000 saud12345/pipeline ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	
        
