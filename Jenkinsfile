@@ -15,7 +15,7 @@ node {
         }
     }
 
-    stage('Deploy to Dev') {
+    stage('Staging') {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
@@ -25,12 +25,13 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
 	    sh "echo Hello from SHELL"
+	    sh "docker stop $(docker ps -a -q)"
             sh " docker run -d  -p 80:8000 saud12345/pipeline "
         } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
 	
-    stage('Deploy to EC2'){
+    stage('Production'){
 	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline  ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ' docker run -d -p 80:8000 saud12345/pipeline ', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
