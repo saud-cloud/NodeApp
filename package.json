@@ -16,6 +16,9 @@
     "docker",
     "dockerfile"
   ],
+  "dependencies": {
+    "express": "^4.16.4"
+  },
   "author": "saudjunaid96@gmail.com",
   "license": "ISC",
   "devDependencies": { "test": ">=0.6.0" }
