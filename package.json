@@ -17,7 +17,8 @@
     "dockerfile"
   ],
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mocha": "1.20.1"
   },
   "author": "saudjunaid96@gmail.com",
   "license": "ISC",
