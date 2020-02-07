@@ -16,7 +16,7 @@ node {
         
         app.inside {
             sh "npm config ls"
-            echo " npm package Tes passed"
+            echo " npm package Test passed"
            // sh "npm test"
         }
     }
@@ -44,12 +44,14 @@ node {
     stage('Production'){
 	    
 	     emailext attachLog: true, body: 'Jenkins build ${BUILD_NUMBER} email Please go to console output to approve the build to be deployed on the production envoirment or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Production Approval', to: 'saudjunaid96@gmail.com'
-	    
+	    def userInput = input(id: 'userInput', message: 'Approve of Disapprove the pipeline job', ok: 'Yes')
 	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline && docker stop mycontainer && docker rm mycontainer && docker run --name mycontainer -d -p 80:8000 saud12345/pipeline', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    
-	     emailext body: 'successfully  deployed the website on URL  http://ec2-52-56-72-47.eu-west-2.compute.amazonaws.com:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Success'
-	
+	    
+	timeout(time: 10, unit: 'SECONDS') {
+      emailext body: 'successfully  deployed the website on URL  http://ec2-52-56-72-47.eu-west-2.compute.amazonaws.com:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Success'
+     }
        
       /*  sshagent(credentials : ['server-id']) {
 	    sh 'ssh -o  StrictHostKeyChecking=no ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com uptime'
