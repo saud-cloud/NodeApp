@@ -26,9 +26,9 @@ node {
 			You would need to first register with DockerHub before you can push images to your account
 			 //mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_NUMBER} to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'saudjunaid96@gmail.com'
 		*/
-	    emailext attachLog: true, body: 'hi this is jenkins build ${BUILD_NUMBER} email Please go to console output to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Jenkins job', to: 'saudjunaid96@gmail.com'
+	emailext attachLog: true, body: 'hi this is jenkins build ${BUILD_NUMBER} email Please go to console output to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Approval to deploy changes', to: 'saudjunaid96@gmail.com'
      
-	def userInput = input(id: 'userInput', message: 'type anything if you want to start the job', ok: 'Yes')
+	def userInput = input(id: 'userInput', message: 'Type anything if you want to start the job', ok: 'Yes')
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
@@ -43,15 +43,13 @@ node {
 	
     stage('Production'){
 	    
-	     emailext attachLog: true, body: 'Jenkins build ${BUILD_NUMBER} email Please go to console output to approve the build to be deployed on the production envoirment or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Production Approval', to: 'saudjunaid96@gmail.com'
+	     emailext attachLog: true, body: 'Jenkins build ${BUILD_NUMBER} email Please go to console output to approve the build to be deployed on the production envoirment or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Production Approval Required', to: 'saudjunaid96@gmail.com'
 	    def userInput = input(id: 'userInput', message: 'Approve of Disapprove the pipeline job', ok: 'Yes')
 	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline && docker stop mycontainer && docker rm mycontainer && docker run --name mycontainer -d -p 80:8000 saud12345/pipeline', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    
-	    
-	timeout(time: 10, unit: 'SECONDS') {
-      emailext body: 'successfully  deployed the website on URL  http://ec2-52-56-72-47.eu-west-2.compute.amazonaws.com:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Success'
-     }
+      emailext body: 'successfully  deployed the website on URL  http://ec2-52-56-72-47.eu-west-2.compute.amazonaws.com:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Successfully deployed the change on Production ENV'
+     
        
       /*  sshagent(credentials : ['server-id']) {
 	    sh 'ssh -o  StrictHostKeyChecking=no ec2user@ec2-3-8-175-164.eu-west-2.compute.amazonaws.com uptime'
