@@ -19,7 +19,7 @@ var path = require('path');
 // viewed at http://localhost:8080
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
-    res.send(‘hello world’);
+   // res.send(‘hello world’);
 });
 
 app.listen(8000);
