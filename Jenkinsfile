@@ -14,6 +14,7 @@ node {
         
         app.inside {
             echo "Tests passed"
+            sh "npm test"
         }
     }
 
