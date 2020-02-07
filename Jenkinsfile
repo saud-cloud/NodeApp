@@ -9,12 +9,13 @@ node {
     }
 
     stage('Test image') {
-	sh "npm config ls"
+	
 	//sh " ./node_modules/mocha/bin/_mocha  ./test.js "
         
         app.inside {
+            sh "npm config ls"
             echo "Tests passed"
-            sh "npm test"
+           // sh "npm test"
         }
     }
 
