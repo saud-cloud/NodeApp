@@ -5,6 +5,7 @@ FROM node:7-onbuild
 LABEL maintainer "saudjunaid96@gmail.com"
 
 RUN npm install
+RUN npm install -g mocha 
 
 # set a health check
 HEALTHCHECK --interval=5s \
