@@ -1,11 +1,11 @@
 // load the http module
-var http = require('http');
+//var http = require('http');
 
 const express = require('express');
 const app = express();
 const router = express.Router();
 
-const path = __dirname + '/views/';
+const path = __dirname + '/';
 const port = 8000;
 
 // listen on localhost:8000
