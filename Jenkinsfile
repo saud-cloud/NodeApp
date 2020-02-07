@@ -21,7 +21,7 @@ node {
         }
     }
 
-    stage('Staging') {
+    stage('Deploy to  Stage ENV') {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 			 //mail bcc: '', body: 'hi this is jenkins build email Please go to console output of ${env.BUILD_NUMBER} to approve or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', cc: '', from: '', replyTo: '', subject: 'jenkinsjon', to: 'saudjunaid96@gmail.com'
@@ -36,15 +36,19 @@ node {
 	    sh "docker stop mycontainer"
             sh "docker rm mycontainer"
             sh " docker run --name mycontainer -d  -p 80:8000 saud12345/pipeline " 
-          emailext body: 'successfully  deployed the website on URL  http://35.177.175.56:8080/ ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+          emailext body: 'successfully  deployed the website on URL  http://35.177.175.56:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Successfully deployed on Staging ENV'
         } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
 	
     stage('Production'){
 	    
+	     emailext attachLog: true, body: 'Jenkins build ${BUILD_NUMBER} email Please go to console output to approve the build to be deployed on the production envoirment or Reject. http://35.177.175.56:8080/ you can use  the following credentials to login to your account Username : Manager , Password: admin', subject: 'Production Approval', to: 'saudjunaid96@gmail.com'
+	    
+	    
 	    sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull saud12345/pipeline && docker stop mycontainer && docker rm mycontainer && docker run --name mycontainer -d -p 80:8000 saud12345/pipeline', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 	    
+	     emailext body: 'successfully  deployed the website on URL  http://ec2-52-56-72-47.eu-west-2.compute.amazonaws.com:80 ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Success'
 	
        
       /*  sshagent(credentials : ['server-id']) {
