@@ -4,7 +4,10 @@ FROM node:7-onbuild
 # set maintainer
 LABEL maintainer "saudjunaid96@gmail.com"
 
-Run npm install express
+RUN npm install
+RUN npm init
+
+RUN npm install express
 # set a health check
 HEALTHCHECK --interval=5s \
             --timeout=5s \
