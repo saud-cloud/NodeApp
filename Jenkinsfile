@@ -4,8 +4,10 @@ node {
     stage('clone repository & Build image ') {
         /* This builds the actual image */
 	checkout scm
+	    echo "code sucessfully pulled from the repository"
 
         app = docker.build("saud12345/pipeline")
+	    echo "successfully build the code inside a docker container"
     }
 
     stage('Test image') {
@@ -14,7 +16,7 @@ node {
         
         app.inside {
             sh "npm config ls"
-            echo "Tests passed"
+            echo " npm package Tes passed"
            // sh "npm test"
         }
     }
