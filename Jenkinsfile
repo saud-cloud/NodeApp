@@ -36,9 +36,7 @@ node {
 	    sh "docker stop mycontainer"
             sh "docker rm mycontainer"
             sh " docker run --name mycontainer -d  -p 80:8000 saud12345/pipeline " 
-            timeout(time: 3, unit: 'seconds') {
-                     emailext attachLog: true, body: 'successfully deployed to Stage env you can see the website at the following URL http://35.177.175.56:8080 '
-                }
+          emailext body: 'successfully  deployed the website on URL  http://35.177.175.56:8080/ ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
         } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
