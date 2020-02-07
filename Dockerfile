@@ -5,9 +5,7 @@ FROM node:7-onbuild
 LABEL maintainer "saudjunaid96@gmail.com"
 
 RUN npm install
-RUN npm init
 
-RUN npm install express
 # set a health check
 HEALTHCHECK --interval=5s \
             --timeout=5s \
